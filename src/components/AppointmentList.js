@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 
 import api from '../services/api';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default function AppointmentList({ time, textTime, reservedText }){
     function transformPropsString(time){
@@ -111,7 +112,6 @@ export default function AppointmentList({ time, textTime, reservedText }){
                 params: {time}
             });
 
-            //console.log(response.data.map(a => a.time));
             setAppointments(response.data);
         }
 
@@ -138,10 +138,28 @@ export default function AppointmentList({ time, textTime, reservedText }){
             return reservedText;
         }
     }
+
+    function puttingButtons(reservedText){
+        if(reservedText == 'Livre'){
+            return (
+                <View>
+                    <TouchableOpacity style={styles.button}>
+                        <Text style={styles.textButton}>Reservar</Text>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
+        else{
+            return (<View />);
+        }
+    }
     
     return (
         <View style={styles.container}>
             <Text style={styles.text}>{transformPropsString(time)} | {isReserved(reservedText, appointments)}</Text>
+            <View>
+                {puttingButtons(isReserved(reservedText, appointments))}
+            </View>    
         </View>
     );
 }
@@ -157,9 +175,22 @@ const styles = StyleSheet.create({
 
     text: {
         color: '#222',
-        paddingBottom: 6,
+        paddingBottom: 3,
         alignItems: 'center',
         alignSelf: 'center',
         paddingTop: 6,
+    },
+
+    button: {
+        backgroundColor: '#f05a5b',
+        borderRadius: 2,
+        alignItems: 'center',
+        marginHorizontal: '30%',
+        marginBottom: 5,
+    },
+
+    textButton: {
+        fontSize: 10,
+        color: '#FFF'
     },
 });

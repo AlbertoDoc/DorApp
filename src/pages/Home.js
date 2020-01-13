@@ -21,6 +21,7 @@ export default function Home({navigation}){
             <View style={styles.view}>
                 <Text style={styles.textHome}>Home page</Text>
             </View>
+            <Text style={styles.welcomeText}>Olá, {name} estes são os horários de hoje</Text>
             {hourList.map(hour => <AppointmentList
                                     key={hour}
                                     time={hour}
@@ -43,6 +44,10 @@ const styles = StyleSheet.create({
         // um padding igual ao tamanho dela
         backgroundColor: '#f05a5b',
         paddingBottom: 2,
+    },
+
+    welcomeText:{
+        alignSelf: 'center',
     },
 
     button: {
