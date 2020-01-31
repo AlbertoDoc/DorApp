@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {View, TouchableOpacity, ScrollView, Text, AsyncStorage, StyleSheet, StatusBar} from 'react-native';
+import {TouchableOpacity, ScrollView, Text, AsyncStorage, StyleSheet} from 'react-native';
 
 import AppointmentList from '../components/AppointmentList';
 
@@ -18,9 +18,6 @@ export default function Home({navigation}){
 
     return(
         <ScrollView>
-            <View style={styles.view}>
-                <Text style={styles.textHome}>Home page</Text>
-            </View>
             <Text style={styles.welcomeText}>Olá, {name} estes são os horários de hoje</Text>
             {hourList.map(hour => <AppointmentList
                                     key={hour}
@@ -37,16 +34,9 @@ export default function Home({navigation}){
 }
 
 const styles = StyleSheet.create({
-    textHome: {
-        alignSelf: 'center',
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-        // esta estilização acima vê o tamanho q esta a statusbar do android e aplica
-        // um padding igual ao tamanho dela
-        backgroundColor: '#f05a5b',
-        paddingBottom: 2,
-    },
-
     welcomeText:{
+        fontSize: 17,
+        fontWeight: 'bold',
         alignSelf: 'center',
     },
 
@@ -61,6 +51,7 @@ const styles = StyleSheet.create({
     },
 
     textButton: {
+        fontSize: 16,
         color: "#FFF",
     },
 

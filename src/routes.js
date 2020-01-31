@@ -7,28 +7,22 @@ import Home from './pages/Home';
 
 const Routes = createAppContainer(
     createStackNavigator({
-        Login: {
-            screen: Login,
-            navigationOptions: {
-                title: 'Login'
-            },
-        },
         Home: {
             screen: Home,
             navigationOptions: {
-                title: 'DorApp'
+                title: 'Página Inicial'
             }
         },
         Appointment: {
             screen: Appointment,
             navigationOptions: {
-                title: 'Marcar'
+                title: 'Marque seu horário'
             }
         }, 
     }, {
-        defaultNavigaionOptions: {
+        defaultNavigationOptions: {
             headerStyle: {
-                backgroundColor: '#7d40e7',
+                backgroundColor: '#f05a5b',
             },
             headerTintColor: '#fff',
         }

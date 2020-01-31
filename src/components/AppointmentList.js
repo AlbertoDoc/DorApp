@@ -170,10 +170,11 @@ const styles = StyleSheet.create({
         borderColor: '#888',
         marginVertical: 5,
         marginHorizontal: 70,
-        borderRadius: 2,
+        borderRadius: 10,
     },
 
     text: {
+        fontSize: 16,
         color: '#222',
         paddingBottom: 3,
         alignItems: 'center',
@@ -186,11 +187,12 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         alignItems: 'center',
         marginHorizontal: '30%',
-        marginBottom: 5,
+        paddingVertical: 3,
+        marginBottom: 10,
     },
 
     textButton: {
-        fontSize: 10,
+        fontSize: 14,
         color: '#FFF'
     },
 });
