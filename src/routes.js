@@ -18,7 +18,7 @@ const Routes = createAppContainer(
             navigationOptions: {
                 title: 'Marque seu horário'
             }
-        }, 
+        },
     }, {
         defaultNavigationOptions: {
             headerStyle: {

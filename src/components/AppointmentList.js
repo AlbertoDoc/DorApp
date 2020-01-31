@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, AsyncStorage, TouchableOpacity} from 'react-native';
 
 import api from '../services/api';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import handleNavigate from '../pages/Home';
 
-export default function AppointmentList({ time, textTime, reservedText }){
+export default function AppointmentList({ time, textTime, reservedText, navigation }){
     function transformPropsString(time){
         if(time == 1){
             textTime = '00h ~ 01h';
@@ -143,7 +143,7 @@ export default function AppointmentList({ time, textTime, reservedText }){
         if(reservedText == 'Livre'){
             return (
                 <View>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={handleButton}>
                         <Text style={styles.textButton}>Reservar</Text>
                     </TouchableOpacity>
                 </View>
@@ -152,6 +152,10 @@ export default function AppointmentList({ time, textTime, reservedText }){
         else{
             return (<View />);
         }
+    }
+
+    async function handleButton(){
+        await AsyncStorage.setItem('hour', time.toString());
     }
     
     return (

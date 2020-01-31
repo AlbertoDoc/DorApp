@@ -6,8 +6,11 @@ import api from '../services/api';
 
 export default function Appointment(){
 
+    const [hour, setHour] = useState('');
     const [name, setname] = useState('');
     var time = [1,2];
+
+    AsyncStorage.getItem('hour').then(setHour);
 
     useEffect(() => {
         AsyncStorage.getItem('name').then(name => setname(name));
@@ -27,6 +30,7 @@ export default function Appointment(){
             <View style={styles.viewForm}>
                 <Text>Horário desejado</Text>
             </View>
+            <Text>{hour}</Text>
         </View>
     );
 }
