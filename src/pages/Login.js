@@ -35,7 +35,7 @@ export default function Login({navigation}){
 
     return(
         <KeyboardAvoidingView behavior="padding" style={styles.container}>    
-            <Text>Bem vindo a DorApp</Text>
+            <Text style={styles.welcomeText}>Bem vindo a DorApp</Text>
             <View style={styles.form}>
                 <Text style={styles.label}>SEU NOME *</Text>
                 <TextInput
@@ -47,7 +47,7 @@ export default function Login({navigation}){
                 value={name}
                 onChangeText={text => setName(text)}
                 />
-                <Text styles={styles.label}>SEU EMAIL *</Text>
+                <Text style={styles.label}>SEU EMAIL *</Text>
                 <TextInput
                 style={styles.input}
                 placeholder="Seu E-MAIL"
@@ -70,6 +70,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#f05a5b',
+    },
+    welcomeText: {
+        fontSize: 19,
+        color: '#fff',
     },
     form: {
         alignSelf: 'stretch',
@@ -78,24 +83,29 @@ const styles = StyleSheet.create({
     },
     label: {
         paddingRight: '30%',
+        color: '#fff',
     },
     input: {
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: '#fff',
         fontSize: 13,
-        borderRadius: 2,
+        borderRadius: 25,
         marginBottom: 10,
         paddingHorizontal: 15,
+        backgroundColor: '#fff',
+        paddingVertical: 4,
+        marginTop: 2,
     },
     button: {
-        backgroundColor: '#f05a5b',
+        backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
         height: 42,
-        borderRadius: 2,
+        borderRadius: 25,
+        marginTop: 8,
     },
     buttonText: {
-        color: '#FFF',
+        color: '#f05a5b',
         fontWeight: 'bold',
     },
 });
