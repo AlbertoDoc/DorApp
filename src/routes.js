@@ -7,6 +7,12 @@ import Home from './pages/Home';
 
 const Routes = createAppContainer(
     createStackNavigator({
+        Login: {
+            screen: Login,
+            navigationOptions: {
+                headerShown: false,
+            }
+        },
         Home: {
             screen: Home,
             navigationOptions: {

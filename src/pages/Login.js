@@ -16,7 +16,7 @@ export default function Login({navigation}){
                 navigation.navigate('Home');
             }
         })
-    }, [])
+    }, []);
 
     async function handleSubmit(){
         const response = await api.post('/sessions', {

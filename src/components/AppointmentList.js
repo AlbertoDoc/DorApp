@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, AsyncStorage, TouchableOpacity} from 'react-native';
 
 import api from '../services/api';
-import handleNavigate from '../pages/Home';
 
 export default function AppointmentList({ time, textTime, reservedText, navigation }){
     function transformPropsString(time){

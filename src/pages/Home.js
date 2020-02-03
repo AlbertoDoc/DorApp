@@ -7,13 +7,32 @@ export default function Home({navigation}){
 
     const [name, setname] = useState('');
     const hourList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
+    const [clicked, setClicked] = useState(false);
 
     useEffect(() => {
         AsyncStorage.getItem('name').then(name => setname(name));
+        AsyncStorage.removeItem('hour');
     }, []);
 
     function handleNavigate(){
-        navigation.navigate('Appointment');
+        //esta funcao so deve deixar ir para a pagina de marcar horário se algum horario
+        //foi selecionado previamente
+        if(checkingButtonClick()){
+            navigation.navigate('Appointment');
+        }
+    }
+
+    function checkingButtonClick(){
+        if(AsyncStorage.getItem('hour') == undefined){
+            return false;
+        }
+        else{
+            console.log(AsyncStorage.getItem('hour'));
+            //esta retornando algum tipo de promise quando nao encontra no asyncstorage
+            //estudar promise dps
+            return true;
+        }
+        //nesta funcao deve ser feita a verificacao se o botao de selecionar horario foi clicado
     }
 
     return(
@@ -57,5 +76,9 @@ const styles = StyleSheet.create({
 
     view: {
         backgroundColor: '#f05a5b',
+    },
+
+    disabledButton: {
+        backgroundColor: '#333',
     },
 });
