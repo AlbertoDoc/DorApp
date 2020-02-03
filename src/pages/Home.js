@@ -33,6 +33,7 @@ export default function Home({navigation}){
             return true;
         }
         //nesta funcao deve ser feita a verificacao se o botao de selecionar horario foi clicado
+        //para fechar issue
     }
 
     return(
