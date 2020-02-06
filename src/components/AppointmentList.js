@@ -4,6 +4,9 @@ import {View, Text, StyleSheet, AsyncStorage, TouchableOpacity} from 'react-nati
 import api from '../services/api';
 
 export default function AppointmentList({ time, textTime, reservedText, navigation }){
+    const [appointments, setAppointments] = useState('');
+    const [shimmerButton, setShimmerButton] = useState(false);
+    
     function transformPropsString(time){
         if(time == 1){
             textTime = '00h ~ 01h';
@@ -102,8 +105,6 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
             return textTime;
         }
     }
-
-    const [appointments, setAppointments] = useState('');
 
     useEffect(() => {
         async function loadAppointments(){

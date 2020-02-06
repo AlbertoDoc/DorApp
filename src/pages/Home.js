@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {TouchableOpacity, ScrollView, Text, AsyncStorage, StyleSheet} from 'react-native';
+import {ToastAndroid} from 'react-native';
 
 import AppointmentList from '../components/AppointmentList';
 
@@ -14,20 +15,26 @@ export default function Home({navigation}){
         AsyncStorage.removeItem('hour');
     }, []);
 
-    function handleNavigate(){
+    async function handleNavigate(){
         //esta funcao so deve deixar ir para a pagina de marcar horário se algum horario
         //foi selecionado previamente
-        if(checkingButtonClick()){
+        if(await checkingButtonClick()){
+            console.log('entrou');
             navigation.navigate('Appointment');
+        }
+        else{
+            ToastAndroid.show('Nenhum horário foi selecionado!', ToastAndroid.SHORT);
         }
     }
 
-    function checkingButtonClick(){
-        if(AsyncStorage.getItem('hour') == undefined){
+     async function checkingButtonClick(){
+         const value = await AsyncStorage.getItem('hour');
+         console.log(value);
+        if(await AsyncStorage.getItem('hour') == undefined || await AsyncStorage.getItem('hour') == null){
             return false;
         }
         else{
-            console.log(AsyncStorage.getItem('hour'));
+            //console.log(AsyncStorage.getItem('hour'));
             //esta retornando algum tipo de promise quando nao encontra no asyncstorage
             //estudar promise dps
             return true;
