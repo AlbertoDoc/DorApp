@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {TouchableOpacity, ScrollView, Text, AsyncStorage, StyleSheet} from 'react-native';
 import {ToastAndroid} from 'react-native';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 import AppointmentList from '../components/AppointmentList';
 
@@ -8,18 +9,18 @@ export default function Home({navigation}){
 
     const [name, setname] = useState('');
     const hourList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
-    const [clicked, setClicked] = useState(false);
+    const [visible, setVisible] = useState(false);
 
     useEffect(() => {
         AsyncStorage.getItem('name').then(name => setname(name));
         AsyncStorage.removeItem('hour');
+
+        setTimeout(()=> {setVisible(true)}, 1000);
     }, []);
 
     async function handleNavigate(){
-        //esta funcao so deve deixar ir para a pagina de marcar horário se algum horario
-        //foi selecionado previamente
+        //This function only redirect to Appointment's page if some hour was previously selected
         if(await checkingButtonClick()){
-            console.log('entrou');
             navigation.navigate('Appointment');
         }
         else{
@@ -28,15 +29,12 @@ export default function Home({navigation}){
     }
 
      async function checkingButtonClick(){
-         const value = await AsyncStorage.getItem('hour');
-         console.log(value);
-        if(await AsyncStorage.getItem('hour') == undefined || await AsyncStorage.getItem('hour') == null){
+        const value = await AsyncStorage.getItem('hour');
+        if(value == undefined || value == null){
             return false;
         }
         else{
-            //console.log(AsyncStorage.getItem('hour'));
-            //esta retornando algum tipo de promise quando nao encontra no asyncstorage
-            //estudar promise dps
+            // Means that Async Storage hour is not empty, i.e the user click on some hour's button
             return true;
         }
         //nesta funcao deve ser feita a verificacao se o botao de selecionar horario foi clicado
@@ -44,8 +42,10 @@ export default function Home({navigation}){
     }
 
     return(
-        <ScrollView>
-            <Text style={styles.welcomeText}>Olá, {name} estes são os horários de hoje</Text>
+        <ScrollView style={styles.scrollView}>
+            <ShimmerPlaceHolder style={styles.shimmer} autoRun={true} visible={visible}>
+                <Text style={styles.welcomeText}>Olá, {name} estes são os horários de hoje</Text>
+            </ShimmerPlaceHolder>
             {hourList.map(hour => <AppointmentList
                                     key={hour}
                                     time={hour}
@@ -88,5 +88,13 @@ const styles = StyleSheet.create({
 
     disabledButton: {
         backgroundColor: '#333',
+    },
+
+    shimmer: {
+        width: '100%',
+    },
+
+    scrollView: {
+        backgroundColor: '#FFF',
     },
 });

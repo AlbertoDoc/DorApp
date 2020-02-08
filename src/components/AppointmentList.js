@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, AsyncStorage, TouchableOpacity} from 'react-native';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 import api from '../services/api';
 
 export default function AppointmentList({ time, textTime, reservedText, navigation }){
     const [appointments, setAppointments] = useState('');
-    const [shimmerButton, setShimmerButton] = useState(false);
+    const [visible, setVisible] = useState(false);
     
     function transformPropsString(time){
         if(time == 1){
@@ -116,6 +117,10 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
         }
 
         loadAppointments();
+
+        setTimeout(()=> {
+            setVisible(true);
+        }, 5000);
     }, []);
 
     function isReserved(reservedText, appointments){
@@ -139,6 +144,7 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
         }
     }
 
+
     function puttingButtons(reservedText){
         if(reservedText == 'Livre'){
             return (
@@ -160,10 +166,14 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
     
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>{transformPropsString(time)} | {isReserved(reservedText, appointments)}</Text>
+            <ShimmerPlaceHolder styles={styles.shimmerAppointment} colorShimmer={["#FFF", "#f05a5b", "#FFF"]} autoRun={true} visible={visible}>
+                <Text style={styles.text}>{transformPropsString(time)} | {isReserved(reservedText, appointments)}</Text>
+            </ShimmerPlaceHolder>
             <View>
-                {puttingButtons(isReserved(reservedText, appointments))}
-            </View>    
+                <ShimmerPlaceHolder styles={styles.shimmerAppointmentButton} colorShimmer={["#FFF", "#f05a5b", "#FFF"]} autoRun={true} visible={visible}>
+                    {puttingButtons(isReserved(reservedText, appointments))}
+                </ShimmerPlaceHolder>
+            </View>
         </View>
     );
 }
@@ -198,5 +208,16 @@ const styles = StyleSheet.create({
     textButton: {
         fontSize: 14,
         color: '#FFF'
+    },
+
+    shimmerAppointment: {
+        borderWidth: 1,
+    },
+
+    shimmerAppointmentButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 50,
+        paddingLeft: 10,
     },
 });
