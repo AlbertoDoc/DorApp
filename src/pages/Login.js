@@ -28,7 +28,6 @@ export default function Login({navigation}){
 
         await AsyncStorage.setItem('user', _id);
         await AsyncStorage.setItem('name', name);
-        // Aqui ele salva 'techs' tbm, n sei se tenho q passar mais alguma info aqui
 
         navigation.navigate('Home');
     }

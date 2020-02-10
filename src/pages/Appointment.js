@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import {View, Text, StyleSheet, AsyncStorage, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, AsyncStorage, TouchableOpacity, ToastAndroid} from 'react-native';
 
 import api from '../services/api';
 
-export default function Appointment(){
+
+export default function Appointment({ navigation }){
 
     const [hour, setHour] = useState('');
     const [name, setName] = useState('');
+    const [userID, setUserID] = useState('');
 
     useEffect(() => {
         AsyncStorage.getItem('name').then(setName);
         AsyncStorage.getItem('hour').then(setHour);
+        AsyncStorage.getItem('user').then(setUserID);
 
     }, []);
 
@@ -89,23 +92,37 @@ export default function Appointment(){
         }
     }
 
+    async function handleYesButton(time, user_id){
+        const response = await api.post('/appointments', {
+            time
+        }, {
+            headers: { user_id }
+        });
+
+        ToastAndroid.show('Horário reservado com sucesso!', ToastAndroid.SHORT);
+    }
+
+    function handleNoButton(){
+        navigation.navigate('Home');
+    }
+
     return(
         <View style={styles.view}>
             <View style={styles.viewForm}>
                 <Text style={styles.confirmationText}>{name}, você escolheu o horário {transformPropsString(parseInt(hour))} tem certeza que deseja continuar?</Text>
                 <View style={styles.buttonView}>
-                    <TouchableOpacity style={styles.yesButton}>
-                        <Text style={styles.yesText}>Sim</Text>
+                    <TouchableOpacity style={styles.yesButton} onPress={() => handleYesButton(hour, userID)}>
+                        <Text style={styles.yesButtonText}>Sim</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.noButton}>
-                        <Text style={styles.noText}>Não</Text>
+                    <TouchableOpacity style={styles.noButton} onPress={handleNoButton}>
+                        <Text style={styles.noButtonText}>Não</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </View>
     );
 }
-//Finish the form and connect with db
+
 const styles = StyleSheet.create({
     viewForm: {
         paddingHorizontal: '7%',
@@ -139,7 +156,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
 
-    yesText: {
+    yesButtonText: {
         color: '#f05a5b',
         fontSize: 16,
     },
@@ -151,7 +168,7 @@ const styles = StyleSheet.create({
         borderRadius: 12,
     },
 
-    noText: {
+    noButtonText: {
         color: '#f05a5b',
         fontSize: 16,
     },
