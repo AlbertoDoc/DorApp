@@ -93,17 +93,18 @@ export default function Appointment({ navigation }){
     }
 
     async function handleYesButton(time, user_id){
-        const response = await api.post('/appointments', {
+        await api.post('/appointments', {
             time
         }, {
             headers: { user_id }
         });
 
         ToastAndroid.show('Horário reservado com sucesso!', ToastAndroid.SHORT);
+        navigation.navigate('Home');
     }
 
     function handleNoButton(){
-        navigation.navigate('Home');
+        navigation.goBack();
     }
 
     return(
