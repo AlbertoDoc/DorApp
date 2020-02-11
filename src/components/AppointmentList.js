@@ -166,11 +166,11 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
     
     return (
         <View style={styles.container}>
-            <ShimmerPlaceHolder styles={styles.shimmerAppointment} colorShimmer={["#FFF", "#f05a5b", "#FFF"]} autoRun={true} visible={visible}>
+            <ShimmerPlaceHolder style={styles.shimmerAppointment} colorShimmer={["#FFF", "#f05a5b", "#FFF"]} autoRun={true} visible={visible}>
                 <Text style={styles.text}>{transformPropsString(time)} | {isReserved(reservedText, appointments)}</Text>
             </ShimmerPlaceHolder>
             <View>
-                <ShimmerPlaceHolder styles={styles.shimmerAppointmentButton} colorShimmer={["#FFF", "#f05a5b", "#FFF"]} autoRun={true} visible={visible}>
+                <ShimmerPlaceHolder style={styles.shimmerAppointmentButton} colorShimmer={["#FFF", "#f05a5b", "#FFF"]} autoRun={true} visible={visible}>
                     {puttingButtons(isReserved(reservedText, appointments))}
                 </ShimmerPlaceHolder>
             </View>
@@ -191,7 +191,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#222',
         paddingBottom: 3,
-        alignItems: 'center',
         alignSelf: 'center',
         paddingTop: 6,
     },
@@ -211,13 +210,18 @@ const styles = StyleSheet.create({
     },
 
     shimmerAppointment: {
-        borderWidth: 1,
+        width: 250,
+        paddingTop: 8,
+        height: 20,
+        marginHorizontal: 7,
     },
 
     shimmerAppointmentButton: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 50,
-        paddingLeft: 10,
+        height: 30,
+        alignSelf: 'center',
+        marginTop: 26,
+        width: 90,
+        borderRadius: 25,
+        marginBottom: 15,
     },
 });

@@ -70,9 +70,6 @@ export default function Home({navigation}){
             <TouchableOpacity style={styles.button} onPress={handleNavigate}>
                 <Text style={styles.textButton}>Marque um horário</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {navigation.navigate('Settings')}}>
-                <Text>Settings</Text>
-            </TouchableOpacity>
         </ScrollView>
     );
 }
@@ -118,6 +115,7 @@ const styles = StyleSheet.create({
     },
 
     headerText: {
-        color: '#fff'
+        color: '#fff',
+        marginVertical: 8,
     },
 });
