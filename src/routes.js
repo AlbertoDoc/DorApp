@@ -18,6 +18,7 @@ const Routes = createAppContainer(
             screen: Home,
             navigationOptions: {
                 title: 'Página Inicial',
+                headerLeft: () => null,
             }
         },
         Appointment: {
