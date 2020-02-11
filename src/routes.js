@@ -4,6 +4,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import Login from './pages/Login';
 import Appointment from './pages/Appointment';
 import Home from './pages/Home';
+import Settings from './pages/Settings';
 
 const Routes = createAppContainer(
     createStackNavigator({
@@ -16,13 +17,19 @@ const Routes = createAppContainer(
         Home: {
             screen: Home,
             navigationOptions: {
-                title: 'Página Inicial'
+                title: 'Página Inicial',
             }
         },
         Appointment: {
             screen: Appointment,
             navigationOptions: {
                 title: 'Marque seu horário'
+            }
+        },
+        Settings:{
+            screen: Settings,
+            navigationOptions: {
+                title: 'Configurações'
             }
         },
     }, {

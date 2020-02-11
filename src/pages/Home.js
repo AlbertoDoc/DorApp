@@ -12,6 +12,14 @@ export default function Home({navigation}){
     const [visible, setVisible] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
+    Home.navigationOptions = {
+        headerRight: () => (
+            <TouchableOpacity style={styles.headerButton} onPress={() => {navigation.navigate('Settings')}}>
+               <Text style={styles.headerText}>Configurações</Text>
+            </TouchableOpacity>
+        )
+    }
+
     useEffect(() => {
         AsyncStorage.getItem('name').then(name => setname(name));
         AsyncStorage.removeItem('hour');
@@ -26,7 +34,6 @@ export default function Home({navigation}){
 
             setTimeout(() => {setRefreshing(false), 2000})
        }, [refreshing]);
-    
 
     async function handleNavigate(){
         //This function only redirect to Appointment's page if some hour was previously selected
@@ -63,6 +70,9 @@ export default function Home({navigation}){
             <TouchableOpacity style={styles.button} onPress={handleNavigate}>
                 <Text style={styles.textButton}>Marque um horário</Text>
             </TouchableOpacity>
+            <TouchableOpacity onPress={() => {navigation.navigate('Settings')}}>
+                <Text>Settings</Text>
+            </TouchableOpacity>
         </ScrollView>
     );
 }
@@ -96,5 +106,18 @@ const styles = StyleSheet.create({
 
     scrollView: {
         backgroundColor: '#FFF',
+    },
+
+    shimmer: {
+        width: '100%',
+    },
+
+    headerButton: {
+        marginRight: 10,
+        backgroundColor: '#f05a5b',
+    },
+
+    headerText: {
+        color: '#fff'
     },
 });
