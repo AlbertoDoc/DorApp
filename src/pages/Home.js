@@ -11,6 +11,7 @@ export default function Home({navigation}){
     const hourList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
     const [visible, setVisible] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [switchValue, setSwitchValue] = useState(false);
 
     Home.navigationOptions = {
         headerRight: () => (
@@ -21,6 +22,17 @@ export default function Home({navigation}){
     }
 
     useEffect(() => {
+        async function getThemeOnAsync(){
+            const value = await AsyncStorage.getItem('colorValue');
+            if(value === 'true'){
+                setSwitchValue(true);
+            }
+            else{
+                setSwitchValue(false);
+            }
+        }
+
+        getThemeOnAsync();
         AsyncStorage.getItem('name').then(name => setname(name));
         AsyncStorage.removeItem('hour');
 
@@ -57,9 +69,9 @@ export default function Home({navigation}){
     }
 
     return(
-        <ScrollView style={styles.scrollView} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
+        <ScrollView style={switchValue ? styles.scrollViewDark : styles.scrollViewLight} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
             <ShimmerPlaceHolder style={styles.shimmer} autoRun={true} visible={visible}>
-                <Text style={styles.welcomeText}>Olá, {name} estes são os horários de hoje</Text>
+                <Text style={switchValue ? [styles.welcomeText, styles.welcomeDarkText] : [styles.welcomeText, styles.welcomeLightText]}>Olá, {name} estes são os horários de hoje</Text>
             </ShimmerPlaceHolder>
             {hourList.map(hour => <AppointmentList
                                     key={hour}
@@ -79,7 +91,15 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: 'bold',
         alignSelf: 'center',
+    },
+
+    welcomeLightText: {
         backgroundColor: '#FFF',
+    },
+
+    welcomeDarkText: {
+        backgroundColor: '#121212',
+        color: '#FFF',
     },
 
     button: {
@@ -97,12 +117,12 @@ const styles = StyleSheet.create({
         color: "#FFF",
     },
 
-    view: {
-        backgroundColor: '#f05a5b',
+    scrollViewLight: {
+        backgroundColor: '#FFF',
     },
 
-    scrollView: {
-        backgroundColor: '#FFF',
+    scrollViewDark: {
+        backgroundColor: '#121212',
     },
 
     shimmer: {

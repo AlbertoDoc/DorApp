@@ -9,11 +9,23 @@ export default function Appointment({ navigation }){
     const [hour, setHour] = useState('');
     const [name, setName] = useState('');
     const [userID, setUserID] = useState('');
+    const [switchValue, setSwitchValue] = useState(false);
 
     useEffect(() => {
         AsyncStorage.getItem('name').then(setName);
         AsyncStorage.getItem('hour').then(setHour);
         AsyncStorage.getItem('user').then(setUserID);
+
+        async function getThemeOnAsync(){
+            const value = await AsyncStorage.getItem('colorValue');
+            if(value === 'true'){
+                setSwitchValue(true);
+            }
+            else{
+                setSwitchValue(false);
+            }
+        }
+        getThemeOnAsync();
 
     }, []);
 
@@ -108,7 +120,7 @@ export default function Appointment({ navigation }){
     }
 
     return(
-        <View style={styles.view}>
+        <View style={switchValue ? styles.viewDark : styles.viewLight}>
             <View style={styles.viewForm}>
                 <Text style={styles.confirmationText}>{name}, você escolheu o horário {transformPropsString(parseInt(hour))} tem certeza que deseja continuar?</Text>
                 <View style={styles.buttonView}>
@@ -125,6 +137,15 @@ export default function Appointment({ navigation }){
 }
 
 const styles = StyleSheet.create({
+    viewLight: {
+        flex: 1,
+    },
+
+    viewDark: {
+        flex: 1,
+        backgroundColor: '#121212',
+    },
+
     viewForm: {
         paddingHorizontal: '7%',
         borderRadius: 12,
