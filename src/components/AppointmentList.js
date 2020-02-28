@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, AsyncStorage, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, AsyncStorage, TouchableOpacity, RefreshControl} from 'react-native';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 import api from '../services/api';
 
-export default function AppointmentList({ time, textTime, reservedText, navigation }){
+export default function AppointmentList({ time, textTime, reservedText, navigation, refresh }){
     const [appointments, setAppointments] = useState('');
     const [visible, setVisible] = useState(false);
     const [switchValue, setSwitchValue] = useState(false);
@@ -174,7 +174,6 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
 
     async function handleButton(){
         await AsyncStorage.setItem('hour', time.toString());
-        //const navigation = useNavigation();
 
         navigation.navigate('Appointment');
     }
