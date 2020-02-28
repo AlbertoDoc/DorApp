@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {TouchableOpacity, ScrollView, Text, AsyncStorage, StyleSheet, RefreshControl} from 'react-native';
-import {ToastAndroid} from 'react-native';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 import AppointmentList from '../components/AppointmentList';
@@ -47,46 +46,31 @@ export default function Home({navigation}){
             setTimeout(() => {setRefreshing(false), 2000})
        }, [refreshing]);
 
-    async function handleNavigate(){
-        //This function only redirect to Appointment's page if some hour was previously selected
-        if(await checkingButtonClick()){
-            navigation.navigate('Appointment');
-        }
-        else{
-            ToastAndroid.show('Nenhum horário foi selecionado!', ToastAndroid.SHORT);
-        }
-    }
-
-     async function checkingButtonClick(){
-        const value = await AsyncStorage.getItem('hour');
-        if(value == undefined || value == null){
-            return false;
-        }
-        else{
-            // Means that Async Storage hour is not empty, i.e the user click on some hour's button
-            return true;
-        }
-    }
-
     return(
         <ScrollView style={switchValue ? styles.scrollViewDark : styles.scrollViewLight} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
             <ShimmerPlaceHolder style={styles.shimmer} autoRun={true} visible={visible}>
                 <Text style={switchValue ? [styles.welcomeText, styles.welcomeDarkText] : [styles.welcomeText, styles.welcomeLightText]}>Olá, {name} estes são os horários de hoje</Text>
             </ShimmerPlaceHolder>
-            {hourList.map(hour => <AppointmentList
+            {hourList.map(hour =>  <AppointmentList
                                     key={hour}
                                     time={hour}
                                     reservedText=''
+                                    navigation={navigation}
                                     />
                                     )}
-            <TouchableOpacity style={styles.button} onPress={handleNavigate}>
-                <Text style={styles.textButton}>Marque um horário</Text>
-            </TouchableOpacity>
         </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
+    scrollViewLight: {
+        backgroundColor: '#FFF',
+    },
+
+    scrollViewDark: {
+        backgroundColor: '#121212',
+    },
+
     welcomeText:{
         fontSize: 17,
         fontWeight: 'bold',
@@ -115,14 +99,6 @@ const styles = StyleSheet.create({
     textButton: {
         fontSize: 16,
         color: "#FFF",
-    },
-
-    scrollViewLight: {
-        backgroundColor: '#FFF',
-    },
-
-    scrollViewDark: {
-        backgroundColor: '#121212',
     },
 
     shimmer: {

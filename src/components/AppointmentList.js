@@ -174,6 +174,9 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
 
     async function handleButton(){
         await AsyncStorage.setItem('hour', time.toString());
+        //const navigation = useNavigation();
+
+        navigation.navigate('Appointment');
     }
     
     return (
