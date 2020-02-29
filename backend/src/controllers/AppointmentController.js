@@ -6,7 +6,7 @@ module.exports = {
         const {time} = req.query;
 
         const appointment = await Appointment.find({time: time});
-        
+
         return res.json(appointment);
     },
 

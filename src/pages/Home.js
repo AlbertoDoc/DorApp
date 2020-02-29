@@ -42,27 +42,21 @@ export default function Home({navigation}){
             setRefreshing(true);
 
 
-
             setTimeout(() => {setRefreshing(false), 2000})
        }, [refreshing]);
 
-    function refreshFunction(){
-        return (hourList.map(hour =>  <AppointmentList
+    return(
+        <ScrollView style={switchValue ? styles.scrollViewDark : styles.scrollViewLight}>
+            <ShimmerPlaceHolder style={styles.shimmer} autoRun={true} visible={visible}>
+                <Text style={switchValue ? [styles.welcomeText, styles.welcomeDarkText] : [styles.welcomeText, styles.welcomeLightText]}>Olá, {name} estes são os horários de hoje</Text>
+            </ShimmerPlaceHolder>
+            {hourList.map(hour =>  <AppointmentList
                                         key={hour}
                                         time={hour}
                                         reservedText=''
                                         navigation={navigation}
-                                        refresh={refreshFunction}
                                         />
-        ));
-    }
-
-    return(
-        <ScrollView style={switchValue ? styles.scrollViewDark : styles.scrollViewLight} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}>
-            <ShimmerPlaceHolder style={styles.shimmer} autoRun={true} visible={visible}>
-                <Text style={switchValue ? [styles.welcomeText, styles.welcomeDarkText] : [styles.welcomeText, styles.welcomeLightText]}>Olá, {name} estes são os horários de hoje</Text>
-            </ShimmerPlaceHolder>
-            {refreshFunction()}
+        )}
         </ScrollView>
     );
 }

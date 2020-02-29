@@ -4,10 +4,11 @@ import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 import api from '../services/api';
 
-export default function AppointmentList({ time, textTime, reservedText, navigation, refresh }){
+export default function AppointmentList({ time, textTime, navigation }){
     const [appointments, setAppointments] = useState('');
     const [visible, setVisible] = useState(false);
     const [switchValue, setSwitchValue] = useState(false);
+    const [reservedText, setReservedText] = useState('');
     
     function transformPropsString(time){
         if(time == 1){
@@ -115,6 +116,8 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
             });
 
             setAppointments(response.data);
+
+            isReserved(appointments);
         }
 
         async function getThemeOnAsync(){
@@ -133,9 +136,9 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
         setTimeout(()=> {
             setVisible(true);
         }, 5000);
-    }, []);
+    }, [reservedText]);
 
-    function isReserved(reservedText, appointments){
+    function isReserved(appointments){
         let user;
         let user_id;
         if(appointments == ''){
@@ -147,12 +150,10 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
             user_id = user[0];
         }
         if(user_id === undefined){
-            reservedText = 'Livre';
-            return reservedText;
+            setReservedText('Livre');
         }
         else {
-            reservedText = 'Reservado';
-            return reservedText;
+            setReservedText('Reservado');
         }
     }
 
@@ -181,11 +182,11 @@ export default function AppointmentList({ time, textTime, reservedText, navigati
     return (
         <View style={styles.container}>
             <ShimmerPlaceHolder style={styles.shimmerAppointment} colorShimmer={["#FFF", "#f05a5b", "#FFF"]} autoRun={true} visible={visible}>
-                <Text style={switchValue ? [styles.text ,styles.textDark] : [styles.text, styles.textLight]}>{transformPropsString(time)} | {isReserved(reservedText, appointments)}</Text>
+                <Text style={switchValue ? [styles.text ,styles.textDark] : [styles.text, styles.textLight]}>{transformPropsString(time)} | {reservedText}</Text>
             </ShimmerPlaceHolder>
             <View>
                 <ShimmerPlaceHolder style={styles.shimmerAppointmentButton} colorShimmer={["#FFF", "#f05a5b", "#FFF"]} autoRun={true} visible={visible}>
-                    {puttingButtons(isReserved(reservedText, appointments))}
+                    {puttingButtons(reservedText)}
                 </ShimmerPlaceHolder>
             </View>
         </View>
