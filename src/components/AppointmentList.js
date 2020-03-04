@@ -162,7 +162,7 @@ export default function AppointmentList({ time, textTime, navigation }){
         if(reservedText == 'Livre'){
             return (
                 <View>
-                    <TouchableOpacity style={styles.button} onPress={handleButton}>
+                    <TouchableOpacity style={styles.button} onPress={() => handleButton(time)}>
                         <Text style={styles.textButton}>Reservar</Text>
                     </TouchableOpacity>
                 </View>
@@ -173,10 +173,8 @@ export default function AppointmentList({ time, textTime, navigation }){
         }
     }
 
-    async function handleButton(){
-        await AsyncStorage.setItem('hour', time.toString());
-
-        navigation.navigate('Appointment');
+    async function handleButton(time){
+        navigation.navigate('Appointment', { time });
     }
     
     return (
